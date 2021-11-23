@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: install packages 📦
-        uses: actions/cache@v2.1.7
-      - run: npm i 
-      
-      - name: cache
         uses: actions/setup-node@v2
+      - run: npm i 
+
+      - name: cache
+        uses: actions/cache@v2.1.7
         with:
           path: node_modules
   
