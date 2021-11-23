@@ -1,4 +1,4 @@
-name: CI-CD try
+name: "CI-CD try"
 
 on: [push]
 
@@ -8,39 +8,38 @@ jobs:
     steps:
       - name: install packages 📦
         uses: actions/setup-node@v2
-      - run: npm i 
+      - run: npm i
 
       - name: cache
         uses: actions/cache@v2.1.7
         with:
           path: node_modules
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-  
+
   build:
-  - uses: actions/checkout@v2
     runs-on: ubuntu-latest
     needs: [install-node-modules]
     steps:
-    - name: build
-      uses: actions/setup-node@v2
-    - run: npm run build
+      - uses: actions/checkout@v2
+      - name: build
+        uses: actions/setup-node@v2
+      - run: npm run build
 
   test:
-  - uses: actions/checkout@v2
     runs-on: ubuntu-latest
-
-    needs: [install-node-modules,build]
+    needs: [install-node-modules, build]
     steps:
+      - uses: actions/checkout@v2
       - name: test
         uses: actions/setup-node@v2.4.1
-      - run: npm run test 
-  
+      - run: npm run test
+
   run:
-  - uses: actions/checkout@v2
     runs-on: ubuntu-latest
 
-    needs: [install-node-modules,build]
+    needs: [install-node-modules, build]
     steps:
+      - uses: actions/checkout@v2
       - name: test
         uses: actions/setup-node@v2.4.1
       - run: npm run start
