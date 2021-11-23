@@ -6,13 +6,17 @@ jobs:
   install-node-modules:
     runs-on: ubuntu-latest
     steps:
-      # - name: cache
-      #   uses: actions/cache@v2.1.7
-      #   with:
-      #     path:  '**/node_modules'
-      #     key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-      
       - uses: actions/checkout@v2
+      - name: cache
+        uses: actions/cache@v2.1.7
+        env:
+          cache-name: "node_modules/**"
+        with:
+          path: |
+            ~/.npm
+            "node_modules/**"
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      
       - name: install packages 📦
         uses: actions/setup-node@v2
       - run: npm i
