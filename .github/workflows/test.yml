@@ -6,16 +6,16 @@ jobs:
   install-node-modules:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: install packages 📦
-        uses: actions/setup-node@v2
-      - run: npm i
-
       - name: cache
         uses: actions/cache@v2.1.7
         with:
           path:  '**/node_modules'
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      
+      - uses: actions/checkout@v2
+      - name: install packages 📦
+        uses: actions/setup-node@v2
+      - run: npm i
 
   build:
     runs-on: ubuntu-latest
